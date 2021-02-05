@@ -1,0 +1,188 @@
+/* miniprogram/pages/test/test.wxss */
+page {
+  background: #f6f6f6;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  background-image: url('http://r.photo.store.qq.com/psc?/V13SCa6I0SMuLh/55aGSGZ20hc8Ink30l70cB1DtVf.LZjbCqKKO5uqHSIpLnEFbsBuqmwfWp.2xZ2z4*h3fzssLf3cRf9jVchjznBs2fMp.HK7FlRSMqEb6SU!/r');
+}
+
+/* 创建圆角矩形边框 */
+.moto-container{
+  border:4px solid #d5dbfd;
+  width:88%;
+  margin-left: 5%;
+  margin-top: 2%;
+  height:30%;
+  border-radius:20rpx;
+  text-align:center;
+  }
+
+/* 背景图片 */
+.header-bg{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+/* 保存按钮 */
+.save-btn{
+  background-color:#66ccff;
+  text-align:center;
+  color:#fff;
+  border-radius:40px;
+  margin-bottom: 40px;
+}
+
+/* 保存按钮点击后 */
+.save-btn-hover{
+  background-color:#2a8dbe;
+  text-align:center;
+  color:#fff;
+  border-radius:40px;
+  margin-bottom: 40px;
+}
+
+/* 保存按钮无法点击时 */
+.save-btn-disable{
+  background-color:#a2a2a2;
+  text-align:center;
+  color:#fff;
+  border-radius:40px;
+  margin-bottom: 40px;
+}
+.backgroud-float{
+  background-color: #daf5f8;
+  height: 80%;
+  width: 88%;
+  margin-left: 6%;
+  box-shadow: 4px 4px 8px  rgba(115, 121, 115, 0.5);
+  margin-bottom: 12px;
+  margin-top: 12px;
+}
+
+.title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 34rpx;
+  margin: 40rpx 0 20rpx 0;
+}
+
+.picker_wrapper {
+  font-size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.statistics_wrapper {
+  color: #66ccff;
+  font-size: 40rpx;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+.top_wrapper {
+  background-color: #f6f6f6;
+  font-size: 30rpx;
+  display: flex;
+  flex-direction: row;
+  align-items:center;
+}
+
+
+.picker_view{
+  padding: 13px;
+}
+
+.statistics_view{
+  margin: auto;
+  /* align-items: center; */
+  /* align-self: center; */
+}
+
+.top_view{
+	padding: 13px;
+  font-size: 18px;
+  color: #fd8888;
+}
+
+.right_arrow {
+  flex-grow: 1;
+  margin-right: 30rpx;
+  width: 30rpx;
+  height: 40rpx;
+  color: #b2b2b2;
+  text-align:right;
+}
+
+.delete_X {
+  flex-grow: 1;
+	margin-right: 50rpx;
+	margin-top: 75rpx;
+  width: 100rpx;
+  height: 100rpx;
+  color: red;
+	text-align:right;
+	font-display: bold;
+}
+
+.submit_btn {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 100rpx auto 0 auto;
+  width: 60%;
+  height: 70rpx;
+  font-size: 40rpx;
+  background-color: #fc5f9b;
+  border-radius: 10rpx;
+  color: #fff;
+}
+
+.submit_btn_gray {
+  background-color: #bcbcbc;
+  color: #000;
+}
+
+.skip_btn_wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 30rpx;
+  margin-top: 30rpx;
+  color: #7f7b7b;
+}
+
+/* 悬浮按钮 */
+.movable-area{
+  pointer-events:none;
+  z-index: 100;
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin-top: 0px;
+  margin-left: 0px;
+}
+.movable-view{ 
+  pointer-events:auto;
+  height: 30px;
+  width: 30px;
+  margin-top: 520px;
+  margin-left: 290px;
+  background: transparent;
+}
+
+.movable-view image{
+  height: 50px;
+  width: 50px;
+}
+

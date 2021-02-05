@@ -1,0 +1,163 @@
+/* miniprogram/pages/about/about.wxss */
+
+.about-page {
+	flex: 1;
+	margin-top: 100px;
+	background-color: #f6f6f6;
+}
+
+.tag-tag {
+	width: 90%;
+	height: 300rpx;
+	margin: 0 auto;
+	margin-top: -150rpx;
+	/* background-color: #f7f7f7; */
+	background-color: transparent;
+	border-radius: 10px;
+	box-shadow: 0px 2px 3px #aaa;
+	position: relative;
+}
+
+.tag-tag .section-1 {
+	display: flex;
+	height: 136rpx;
+	line-height: 136rpx;
+	flex-direction: row;
+	background-color: #f7f7f7;
+	/*padding-top: 20rpx;
+padding-left: 20rpx;*/
+	padding: 20rpx;
+}
+
+
+.tag-tag .section-1 .avatar {
+	width: 136rpx;
+	height: 136rpx;
+	/* background-color: #f; */
+	/*text-align: center;*/
+	/*line-height: 136rpx;*/
+	float: left;
+}
+
+.avatar image {
+	width: 110rpx;
+	height: 110rpx;
+	border-radius: 60rpx;
+	/*vertical-align: middle;*/
+}
+
+
+.flex1 {
+	height: 45rpx;
+	line-height: 45rpx;
+	/*margin-left: 10rpx;*/
+}
+
+.flex2 {
+	height: 40rpx;
+	line-height: 40rpx;
+	/*margin-left: 10rpx;*/
+}
+
+.flex1 image {
+	width: 20rpx;
+	height: 20rpx;
+}
+
+.tag-tag .section-1 .detail {
+	/*background-color: #afa;*/
+	flex: 3;
+	float: right;
+}
+
+.detail .name {
+	/*background-color: #ccc*/
+	font-size: 40rpx;
+	color: #70d2ff;
+	text-shadow: #aaa;
+}
+
+.detail .comp {
+	/*background-color: #f00*/
+	font-size: 26rpx;
+	color: #666;
+}
+
+.detail .loca {
+	/*background-color: #ff0*/
+	font-size: 26rpx;
+	color: #777;
+}
+
+.section-2 {
+	height: 100rpx;
+	background-color: #f7f7f7;
+	margin-top: 40rpx;
+}
+
+.section-2-detail {
+	margin-top: 80rpx;
+	padding-left: 20rpx;
+	color: #aaa;
+}
+
+.section-2-detail .comp {
+	line-height: 20rpx;
+	font-size: 22rpx;
+}
+
+.section-3 {
+	position: absolute;
+	width: 167rpx;
+	height: 140rpx;
+	/* background-color: #ccc; */
+	right: 20rpx;
+	top: 150rpx;
+}
+
+.section-3 image {
+	width: 100%;
+	height: 100%;
+}
+
+.person-introduction {
+	font-size: 50rpx;
+	padding: 40rpx;
+	margin-top: 20rpx;
+	line-height: 50rpx;
+}
+
+.person-introduction-title1 {
+	margin-top: 60rpx;
+	font-size: 48rpx;
+	line-height: 50rpx;
+	color: rgb(143, 229, 255);
+}
+
+.person-introduction-title2 {
+	margin-top: 60rpx;
+	font-size: 48rpx;
+	line-height: 50rpx;
+	color: rgb(171, 252, 78);
+}
+
+.person-introduction-title3 {
+	margin-top: 60rpx;
+	font-size: 48rpx;
+	line-height: 50rpx;
+	color: rgb(255, 143, 236);
+}
+
+.person-introduction-title4 {
+	margin-top: 60rpx;
+	font-size: 48rpx;
+	line-height: 50rpx;
+	color: rgb(255, 143, 143);
+}
+
+.person-introduction-desc {
+	font-size: 30rpx;
+	margin-top: 10rpx;
+	line-height: 50rpx;
+	color: #833;
+}

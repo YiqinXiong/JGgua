@@ -1,0 +1,46 @@
+{
+	"pages": [
+		"pages/about/about",
+		"pages/setRecord/setRecord",
+		"pages/calendar/calendar",
+		"pages/index/index"
+		
+		
+		
+	],
+	"window": {
+		"backgroundColor": "#f6f6f6",
+		"backgroundTextStyle": "light",
+		"navigationBarBackgroundColor": "#ff8888",
+		"navigationBarTitleText": "LTH, I LOVE U",
+		"navigationBarTextStyle": "white"
+	},
+	"tabBar": {
+		"list": [
+			{
+				"pagePath": "pages/calendar/calendar",
+				"iconPath": "images/cal.png",
+				"selectedIconPath": "images/cal_focus.png",
+				"text": "日历"
+			},
+			{
+				"pagePath": "pages/setRecord/setRecord",
+				"iconPath": "images/set.png",
+				"selectedIconPath": "images/set_focus.png",
+				"text": "设置历史经期"
+			},
+			{
+				"pagePath": "pages/about/about",
+				"iconPath": "images/about.png",
+				"selectedIconPath": "images/about_focus.png",
+				"text": "关于我"
+			}
+		],
+		"backgroundColor": "#d9e8f3",
+		"color": "#808080",
+		"borderStyle": "black",
+		"selectedColor": "#f19b1a"
+	},
+	"sitemapLocation": "sitemap.json",
+	"style": "v2"
+}

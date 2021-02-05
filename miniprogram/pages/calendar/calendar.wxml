@@ -1,0 +1,27 @@
+<view style="width: 100%;height:640rpx;overflow:hidden;margin: 0 auto 40rpx;margin-top:40rpx">
+	<calendar calendarConfig="{{calendarConfig}}" bind:onSwipe="onSwipe" bind:onTapDay="onTapDay" bind:afterTapDay="afterTapDay" bind:whenChangeWeek="whenChangeWeek" bind:whenChangeMonth="whenChangeMonth" bind:afterCalendarRender="afterCalendarRender"></calendar>
+</view>
+
+<view class="mark">
+	<view class="mark_icon card_icon"></view>
+	<view class="mark_text">运动打卡</view>
+	<view class="mark_icon aunt_icon"></view>
+	<view class="mark_text">历史经期</view>
+	<view class="mark_icon pre_icon"></view>
+	<view class="mark_text">预测经期</view>
+</view>
+<view wx:if="{{showDayDetail}}" class="clock">
+	<view class="clock_title">{{curYear || '--'}}年{{curMonth || '--'}}月{{curDay || '--'}}日打卡信息</view>
+	<!-- 是否打卡 -->
+	<view class="flex-wrp-row item">
+		<view class="clock_text item-left flex-wrp-row">是否打卡</view>
+		<!-- <switch class="item-right flex-wrp-row" checked="{{switchedArr[selectDay-1]}}" bindchange="switchChange" /> -->
+		<switch class="item-right flex-wrp-row" checked="{{curCarded}}" bindchange="switchChange"/>
+	</view>
+	<!-- 备注 -->
+	<view class="tips flex-wrp-row item">
+		<view class="clock_text tips_text item-left flex-wrp-row">备注</view>
+		<textarea class="text_area item-right flex-wrp-row" bindinput="inputing" bindblur="finishInput" auto-height placeholder="" value="{{tipsContent}}"></textarea>
+		<!-- <textarea class="text_area item-right flex-wrp-row" auto-height placeholder="" ></textarea> -->
+	</view>
+</view>

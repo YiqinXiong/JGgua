@@ -1,0 +1,30 @@
+<!--index.wxml-->
+<view class="container">
+
+	<!-- 用户 openid -->
+	<!-- <view class="userinfo"> -->
+	<!-- <button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="userinfo-avatar" style="background-image: url({{avatarUrl}})" size="default"></button>
+		<view class="userinfo-nickname-wrapper">
+			<view wx:if="{{!logged}}" class="userinfo-nickname">《《点击左侧头像登录</view>
+			<view wx:else class="userinfo-nickname">{{userInfo.nickName}}</view>
+		</view> -->
+
+	<block>
+
+		<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+		<text wx:if="{{logged}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
+		<!-- <text wx:else class="tips">灰灰的多难看，点一下按钮它就变成你美美的头像了</text> -->
+		<text wx:else class="tips">要添加历史经期记录，请授权</text>
+	</block>
+	<!-- </view> -->
+	<view class="button-block">
+		<view wx:if="{{logged}}">
+			<text class="tips">{{userInfo.nickName}}，点击下方按钮开启这份小礼物吧！</text>
+			<button bindtap="onGetOpenid" class="btn">我是按钮</button>
+		</view>
+		<view wx:else>
+			<button open-type="getUserInfo" bindgetuserinfo="onGetUserInfo" class="btn">仙女授权下呗</button>
+			<button bindtap="cancel" class="cbtn">拒绝</button>
+		</view>
+	</view>
+</view>

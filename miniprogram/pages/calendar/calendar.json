@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "看看历史和预测经期吧",
+  "usingComponents": {
+    "calendar": "../../component/calendar/index"
+  }
+}

@@ -1,0 +1,87 @@
+/**index.wxss**/
+.userinfo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.userinfo-avatar {
+  width: 192rpx;
+  height: 192rpx;
+  margin: 20rpx;
+  border-radius: 50%;
+  background-color: #777;
+}
+
+.userinfo-nickname {
+  color: #899;
+  background-color: transparent;
+  font-size: 36rpx;
+  font-weight: 400;
+}
+
+.tips {
+  color: #877;
+  background-color: transparent;
+  font-size: 28rpx;
+  font-weight: 400;
+  margin: auto;
+}
+
+.usermotto {
+  margin-top: 200px;
+}
+
+/* 按钮 */
+.btn{
+  background-color:#678aff;
+  text-align:center;
+  color:#f6f6f6;
+  border-radius:40px;
+  margin-top: 50rpx;
+  margin-bottom: 40px;
+}
+
+/* 按钮点击后 */
+.btn-hover{
+  background-color:#66ccff;
+  text-align:center;
+  color:#ffffff;
+  border-radius:40px;
+  margin-bottom: 40px;
+}
+
+/* 按钮 */
+.cbtn{
+  background-color:#67ff95;
+  text-align:center;
+  color:#f6f6f6;
+  border-radius:40px;
+  margin-top: 50rpx;
+  margin-bottom: 40px;
+}
+
+/* 按钮点击后 */
+.cbtn-hover{
+  background-color:#adffe0;
+  text-align:center;
+  color:#ffffff;
+  border-radius:40px;
+  margin-bottom: 40px;
+}
+
+/* 按钮无法点击时 */
+.btn-disable{
+  background-color:#a2a2a2;
+  text-align:center;
+  color:#f6f6f6;
+  border-radius:40px;
+  margin-bottom: 40px;
+}
+
+/* 按钮区域 */
+.button-block {
+  height: 300rpx;
+  margin-top: 500rpx;
+  
+}

@@ -1,0 +1,148 @@
+
+/* 日历下方的标记 */
+.mark {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  font-size: 30rpx;
+  margin-top: 30rpx;
+}
+.mark_icon {
+  width: 15rpx;
+  height: 15rpx;
+  border-radius: 50%;
+  margin: 0 10rpx 0 20rpx;
+}
+.card_icon {
+  background-color: purple;
+  border-radius: 50%;
+  width: 12rpx;
+  height: 12rpx;
+}
+.aunt_icon {
+  background-color: #fd6666;
+  width: 40rpx;
+  height: 40rpx;
+}
+.pre_icon {
+  background-color: #fd666650;
+  width: 40rpx;
+  height: 40rpx;
+}
+.ovulate_icon {
+  background-color: #e84df9;
+}
+.safe_icon {
+  background-color: #09f945;
+}
+.mark_text {
+  margin-right: 30rpx;
+}
+/* 打卡和备注栏 */
+.clock_title {
+  font-size: 30rpx;
+  color: #b1b1b1;
+  margin: 60rpx 20rpx 10rpx 20rpx;
+}
+.clock_icon {
+  position: absolute;
+  width: 30rpx;
+  height: 30rpx;
+  right: 1;
+  top: 0;
+  background-color: #66ccff;
+  border: solid #adfa48 6rpx;
+  border-radius: 50%;
+  font-size: 20rpx;
+}
+.clock_text {
+  color: #686868;
+  font-size: 32rpx;
+  display: inline-block;
+  margin: 0 20rpx;
+}
+.tips {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items:center;
+  margin-top: 30rpx;
+}
+.text_area {
+  border:solid 1rpx #b1b1;
+
+}
+
+/* 水平显示 */
+.flex-wrp-row {
+  display: flex;
+  flex-direction: row;
+}
+.item {
+  padding: 20rpx;
+  position: relative;
+}
+.item-left {
+   flex: 1; /* 重要 */
+   align-items:center;
+}
+.item-right {
+  position: relative;
+  align-items:center;
+}
+
+.b {
+	display: flex;
+}
+
+.lr {
+	flex-direction: row;
+}
+
+.tb {
+	flex-direction: column;
+}
+
+.ps {
+	justify-content: flex-start;
+}
+
+.pb {
+	justify-content: space-between;
+}
+
+.pc {
+	justify-content: center;
+}
+
+.ac {
+	align-items: center;
+}
+
+.cc {
+	align-items: center;
+	justify-content: center;
+}
+
+.wrap {
+	flex-wrap: wrap;
+}
+
+.flex {
+	flex-grow: 1;
+}
+
+.blue-date {
+	color: blue;
+}
+
+.history-date {
+  color: #e8ffeb;
+  background-color: #fd6666;
+}
+
+.predict-date {
+  color: #e8ffeb;
+  background-color: #fd666650;
+}

@@ -1,0 +1,67 @@
+<view>
+	<!--***** 统计量 -->
+	<view wx:if="{{tempLength>0}}">
+		<view class="moto-container">
+			<view class="statistics_wrapper">
+				<view class="statistics_view">帮宝贝统计的数据都在这里啦！</view>
+			</view>
+			<view class="statistics_wrapper">
+				<view class="statistics_view">🐻♥️🍉</view>
+			</view>
+			<view class="picker_wrapper">
+				<view class="picker_view">共有记录：{{obj.length}} 条</view>
+			</view>
+			<view class="picker_wrapper">
+				<view class="picker_view">平均两次拜访间隔：{{avgInterval}} 天</view>
+			</view>
+			<view class="picker_wrapper">
+				<view class="picker_view">平均每次拜访：{{avgDuration}} 天</view>
+			</view>
+			<view class="picker_wrapper">
+				<view class="picker_view">预测下次拜访时间：{{preComeDate}}</view>
+			</view>
+		</view>
+	</view>
+
+	<!--***** 无记录时的提示图 -->
+	<image wx:if="{{obj.length==0}}" class="header-bg" mode='aspectFit' src="../../images/bg1.jpg"></image>
+
+	<!--***** 浮动的加号按钮 -->
+	<movable-area class='movable-area'>
+		<movable-view class="movable-view" direction="all">
+			<image src='../../images/add_icon.png' mode='aspectFit' bindtap='onTapAdd'></image>
+		</movable-view>
+	</movable-area>
+
+	<!--***** 历史记录卡片 -->
+	<block wx:for="{{obj}}" wx:for-index='curIndex' wx:for-item='curItem'>
+		<view class="backgroud-float">
+			<!-- 月经记录n：     X -->
+			<view class="top_wrapper">
+				<text class="top_view">月经记录：{{curIndex + 1}}</text>
+				<view class="delete_X" bindtap="onTapDelete" data-curIndex="{{curIndex}}">X</view>
+			</view>
+			<!-- 她来了她来了 -->
+			<picker mode="date" bindchange="bindPickerRecentChange_Come" value="{{obj[curIndex].comeDate}}" start="{{startDate}}" end="{{endDate}}" data-curIndex="{{curIndex}}">
+				<view class="picker_wrapper">
+					<view class="picker_view">她来了她来了：{{obj[curIndex].comeDate}}</view>
+					<view class="right_arrow">》</view>
+				</view>
+			</picker>
+			<!-- 她走了她走了 -->
+			<picker mode="date" bindchange="bindPickerRecentChange_Go" value="{{obj[curIndex].goDate}}" start="{{startDate}}" end="{{endDate}}" data-curIndex="{{curIndex}}">
+				<view class="picker_wrapper">
+					<view class="picker_view">她走了她走了：{{obj[curIndex].goDate}}</view>
+					<view class="right_arrow">》</view>
+				</view>
+			</picker>
+			<!-- 持续时间 -->
+			<view wx:if="{{obj[curIndex].duration >= 0}}" class="picker_wrapper">
+				<view class="picker_view">历经{{obj[curIndex].duration}}天</view>
+			</view>
+		</view>
+	</block>
+
+	<!-- 保存按钮 -->
+	<button wx:if="{{obj.length>0}}" class="save-btn" hover-class="save-btn-hover" bindtap="onTapSave">保存到云端</button>
+</view>
