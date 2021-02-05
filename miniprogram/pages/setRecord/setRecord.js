@@ -212,8 +212,8 @@ Page({
 		}
 		temp[curIndex].comeDate = e.detail.value
 		temp[curIndex].isComeFinished = true
-		/***** 完成日期填写就按Come的日期排序 */
 
+		/***** 完成日期填写就按Come的日期排序 */
 		if (temp[curIndex].isComeFinished && temp[curIndex].isGoFinished) {
 			var comeDate = new Date(temp[curIndex].comeDate)
 			var goDate = new Date(temp[curIndex].goDate)
@@ -319,8 +319,8 @@ Page({
 			}
 		}
 
-		var avgDuration = tempLength > 0 ? parseInt(tempSumDuration / tempLength) : 5
-		var avgInterval = tempLength - 1 > 0 ? parseInt(tempSumInterval / (tempLength - 1)) : 28
+		var avgDuration = tempLength > 0 ? Math.round(tempSumDuration / tempLength) : 5
+		var avgInterval = tempLength - 1 > 0 ? Math.round(tempSumInterval / (tempLength - 1)) : 28
 		var preComeDate = ''
 		if (lastFinishedRecordIndex != -1) {
 			// dd为预测的日期，Date类型
