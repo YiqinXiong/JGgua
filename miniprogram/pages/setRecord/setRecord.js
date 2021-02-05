@@ -299,6 +299,11 @@ Page({
 				tempLength--
 				continue
 			}
+			//不统计近12个月以前的数据
+			if (temp.length > 12 && i < (temp.length - 12)) {
+				tempLength--
+				continue
+			}
 			lastFinishedRecordIndex = i
 			var lastComeDate = ''
 			var comeDate = new Date(temp[i].comeDate)
