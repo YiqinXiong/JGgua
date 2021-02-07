@@ -30,7 +30,7 @@ Page({
 		readOnly: false, //是否开启精简只读模式
 		sizeList: [], //存储每一列最长的长度
 		head: [{
-			"key": "",
+			"key": "index",
 			"name": "序号"
 		}, {
 			"key": "comeDate",
@@ -202,6 +202,20 @@ Page({
 		}
 		this.setData({
 			objChanged: false
+		})
+
+		// 最后订阅下一次的经期提醒
+		console.log(wx.getSetting({
+			withSubscriptions: true,
+		}))
+		wx.requestSubscribeMessage({
+			tmplIds: ['MHOvPKqWjA2lwCMUyQ7kv_6v-PplmnVvoTgzMxR5Dm4', 'iR9X1sDnvalF-m175DI2Rv9tGSpzpwNdXt40gCj2SUU'],
+			success(res) {
+				console.log(res)
+			},
+			fail(err) {
+				console.error('requestSubscribeMessage调用失败', err);
+			}
 		})
 	},
 	/***** 选择器选择时触发，将当前日期设置为选择到的日期 */
@@ -386,18 +400,17 @@ Page({
 		})
 		// 进入精简模式
 		if (e.detail.value) {
-
 			// 填写精简模式表格
 			let sizeList = []; //存储每一列最长的长度
 			let head = this.data.head
 			let body = this.data.obj
 			for (let curHead in head) {
-				if(curHead==0){
+				if (curHead == 0) {
 					sizeList[curHead] = head[curHead].name.length;
 					continue;
 				}
 				for (let curLine in body) {
-					console.log(curHead,curLine)
+					console.log(curHead, curLine)
 					//初始化每一列的长度
 					sizeList[curHead] = sizeList[curHead] || head[curHead].name.length;
 					//得到每一列中 每一个单元格的内容

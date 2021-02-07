@@ -43,7 +43,7 @@
 
 	<!--***** 历史记录卡片 -->
 	<view wx:if="{{!readOnly}}">
-		<block wx:for="{{obj}}" wx:for-index='curIndex' wx:for-item='curItem'>
+		<block wx:for="{{obj}}" wx:key="comeDate" wx:for-index='curIndex' wx:for-item='curItem'>
 			<view class="backgroud-float">
 				<!-- 月经记录n：     X -->
 				<view class="top_wrapper">
@@ -73,24 +73,24 @@
 			</view>
 		</block>
 	</view>
-	
+
 	<!--***** 精简视图表格 -->
 	<view wx:if="{{tempLength>0 && readOnly}}">
 		<view class="moto-container">
 			<scroll-view scroll-x="true">
 				<view class="flex">
-					<block wx:for="{{head}}" wx:for-item="curHead" wx:for-index='curHeadIndex'>
+					<block wx:for="{{head}}" wx:key="key" wx:for-item="curHead" wx:for-index='curHeadIndex'>
 						<view class="column" style="min-width:calc({{sizeList[curHeadIndex]+1}}em + 1rpx)">
 							<view class="head_cell">{{curHead.name}}</view>
 							<!-- 第一列显示序号 -->
 							<view wx:if="{{curHeadIndex==0}}">
-								<view class="cell" wx:for="{{obj}}" wx:for-item="curLine" wx:for-index='curLineIndex'>
+								<view class="cell" wx:for="{{obj}}" wx:key="comeDate" wx:for-item="curLine" wx:for-index='curLineIndex'>
 									{{curLineIndex+1}}
 								</view>
 							</view>
 							<!-- 后面列分别显示来的日子、走的日子和持续天数 -->
 							<view wx:if="{{curHeadIndex>0}}">
-								<view class="cell" wx:for="{{obj}}" wx:for-item="curLine">
+								<view class="cell" wx:for="{{obj}}" wx:key="comeDate" wx:for-item="curLine">
 									{{curLine[curHead.key]}}
 								</view>
 							</view>
