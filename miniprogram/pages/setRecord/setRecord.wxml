@@ -21,47 +21,90 @@
 				<view class="picker_view">预测下次拜访时间：{{preComeDate}}</view>
 			</view>
 		</view>
+		<view class="moto-container">
+			<view class="picker_wrapper">
+				<view class="picker_view_bold">精简只读模式</view>
+				<view class="right_switch_button">
+					<switch checked="{{readOnly}}" bindchange="switchChange" />
+				</view>
+			</view>
+		</view>
 	</view>
 
 	<!--***** 无记录时的提示图 -->
 	<image wx:if="{{obj.length==0}}" class="header-bg" mode='aspectFit' src="../../images/bg1.jpg"></image>
 
 	<!--***** 浮动的加号按钮 -->
-	<movable-area class='movable-area'>
+	<movable-area wx:if="{{!readOnly}}" class='movable-area'>
 		<movable-view class="movable-view" direction="all">
 			<image src='../../images/add_icon.png' mode='aspectFit' bindtap='onTapAdd'></image>
 		</movable-view>
 	</movable-area>
 
 	<!--***** 历史记录卡片 -->
-	<block wx:for="{{obj}}" wx:for-index='curIndex' wx:for-item='curItem'>
-		<view class="backgroud-float">
-			<!-- 月经记录n：     X -->
-			<view class="top_wrapper">
-				<text class="top_view">月经记录：{{curIndex + 1}}</text>
-				<view class="delete_X" bindtap="onTapDelete" data-curIndex="{{curIndex}}">X</view>
-			</view>
-			<!-- 她来了她来了 -->
-			<picker mode="date" bindchange="bindPickerRecentChange_Come" value="{{obj[curIndex].comeDate}}" start="{{startDate}}" end="{{endDate}}" data-curIndex="{{curIndex}}">
-				<view class="picker_wrapper">
-					<view class="picker_view">她来了她来了：{{obj[curIndex].comeDate}}</view>
-					<view class="right_arrow">》</view>
+	<view wx:if="{{!readOnly}}">
+		<block wx:for="{{obj}}" wx:for-index='curIndex' wx:for-item='curItem'>
+			<view class="backgroud-float">
+				<!-- 月经记录n：     X -->
+				<view class="top_wrapper">
+					<text class="top_view">月经记录：{{curIndex + 1}}</text>
+					<view class="delete_X" bindtap="onTapDelete" data-curIndex="{{curIndex}}">X</view>
 				</view>
-			</picker>
-			<!-- 她走了她走了 -->
-			<picker mode="date" bindchange="bindPickerRecentChange_Go" value="{{obj[curIndex].goDate}}" start="{{startDate}}" end="{{endDate}}" data-curIndex="{{curIndex}}">
-				<view class="picker_wrapper">
-					<view class="picker_view">她走了她走了：{{obj[curIndex].goDate}}</view>
-					<view class="right_arrow">》</view>
+				<!-- 她来了她来了 -->
+				<picker mode="date" bindchange="bindPickerRecentChange_Come" value="{{obj[curIndex].comeDate}}"
+					start="{{startDate}}" end="{{endDate}}" data-curIndex="{{curIndex}}">
+					<view class="picker_wrapper">
+						<view class="picker_view">她来了她来了：{{obj[curIndex].comeDate}}</view>
+						<view class="right_arrow">》</view>
+					</view>
+				</picker>
+				<!-- 她走了她走了 -->
+				<picker mode="date" bindchange="bindPickerRecentChange_Go" value="{{obj[curIndex].goDate}}"
+					start="{{startDate}}" end="{{endDate}}" data-curIndex="{{curIndex}}">
+					<view class="picker_wrapper">
+						<view class="picker_view">她走了她走了：{{obj[curIndex].goDate}}</view>
+						<view class="right_arrow">》</view>
+					</view>
+				</picker>
+				<!-- 持续时间 -->
+				<view wx:if="{{obj[curIndex].duration >= 0}}" class="picker_wrapper">
+					<view class="picker_view">历经{{obj[curIndex].duration}}天</view>
 				</view>
-			</picker>
-			<!-- 持续时间 -->
-			<view wx:if="{{obj[curIndex].duration >= 0}}" class="picker_wrapper">
-				<view class="picker_view">历经{{obj[curIndex].duration}}天</view>
 			</view>
+		</block>
+	</view>
+	
+	<!--***** 精简视图表格 -->
+	<view wx:if="{{tempLength>0 && readOnly}}">
+		<view class="moto-container">
+			<scroll-view scroll-x="true">
+				<view class="flex">
+					<block wx:for="{{head}}" wx:for-item="curHead" wx:for-index='curHeadIndex'>
+						<view class="column" style="min-width:calc({{sizeList[curHeadIndex]+1}}em + 1rpx)">
+							<view class="head_cell">{{curHead.name}}</view>
+							<!-- 第一列显示序号 -->
+							<view wx:if="{{curHeadIndex==0}}">
+								<view class="cell" wx:for="{{obj}}" wx:for-item="curLine" wx:for-index='curLineIndex'>
+									{{curLineIndex+1}}
+								</view>
+							</view>
+							<!-- 后面列分别显示来的日子、走的日子和持续天数 -->
+							<view wx:if="{{curHeadIndex>0}}">
+								<view class="cell" wx:for="{{obj}}" wx:for-item="curLine">
+									{{curLine[curHead.key]}}
+								</view>
+							</view>
+						</view>
+					</block>
+				</view>
+			</scroll-view>
 		</view>
-	</block>
+	</view>
 
 	<!-- 保存按钮 -->
-	<button wx:if="{{obj.length>0}}" class="save-btn" hover-class="save-btn-hover" bindtap="onTapSave">保存到云端</button>
+	<view class="save-btn-wrapper">
+		<button wx:if="{{obj.length>0}}" class="save-btn" hover-class="save-btn-hover" bindtap="onTapSave">
+			保存到云端
+		</button>
+	</view>
 </view>

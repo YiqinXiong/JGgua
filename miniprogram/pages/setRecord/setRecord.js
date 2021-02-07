@@ -26,7 +26,22 @@ Page({
 		docId: '',
 		startDate: startDate,
 		endDate: util.getCurrentDay(),
-		objChanged: false
+		objChanged: false,
+		readOnly: false, //是否开启精简只读模式
+		sizeList: [], //存储每一列最长的长度
+		head: [{
+			"key": "",
+			"name": "序号"
+		}, {
+			"key": "comeDate",
+			"name": "她来了"
+		}, {
+			"key": "goDate",
+			"name": "她走了"
+		}, {
+			"key": "duration",
+			"name": "持续天数"
+		}] //表头
 	},
 
 	/***** 获取openid */
@@ -73,7 +88,6 @@ Page({
 				}
 			})
 		}
-
 	},
 	/***** 页面初次渲染完成，统计Avg值，给出预测值 */
 	onReady: function () {
@@ -363,5 +377,46 @@ Page({
 			that.countAvg()
 			that.timeCounter()
 		}, 1000)
+	},
+	/***** 拨动开关 */
+	switchChange: function (e) {
+		console.log('switchChange', e)
+		this.setData({
+			readOnly: e.detail.value
+		})
+		// 进入精简模式
+		if (e.detail.value) {
+
+			// 填写精简模式表格
+			let sizeList = []; //存储每一列最长的长度
+			let head = this.data.head
+			let body = this.data.obj
+			for (let curHead in head) {
+				if(curHead==0){
+					sizeList[curHead] = head[curHead].name.length;
+					continue;
+				}
+				for (let curLine in body) {
+					console.log(curHead,curLine)
+					//初始化每一列的长度
+					sizeList[curHead] = sizeList[curHead] || head[curHead].name.length;
+					//得到每一列中 每一个单元格的内容
+					let v = body[curLine][head[curHead].key] + "";
+					//得到 \w 的长度
+					let wSize = v.match(/[\w]/g) || "";
+					//得到除上面之外的其他内容的长度
+					let otherSize = v.length - wSize.length;
+					//计算每一个单元格的长度
+					let vSize = wSize.length * 0.5 + otherSize;
+					//将最长的一个单元格放入数组中
+					if (vSize > sizeList[curHead])
+						sizeList[curHead] = vSize;
+					// console.log(curHead, v, wSize, otherSize, vSize, sizeList[curHead])
+				}
+			}
+			this.setData({
+				sizeList: sizeList
+			})
+		}
 	}
 })

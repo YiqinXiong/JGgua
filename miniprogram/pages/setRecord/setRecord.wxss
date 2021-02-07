@@ -26,6 +26,15 @@ page {
   width: 100%;
   height: 100%;
 }
+
+/* 保存按钮框 */
+.save-btn-wrapper{
+  flex-direction: row;
+  align-items:center;
+  margin-top: 10px;
+}
+
+
 /* 保存按钮 */
 .save-btn{
   background-color:#66ccff;
@@ -98,6 +107,11 @@ page {
   padding: 13px;
 }
 
+.picker_view_bold{
+  padding: 13px;
+  font: bold;
+}
+
 .statistics_view{
   margin: auto;
   /* align-items: center; */
@@ -116,6 +130,12 @@ page {
   width: 30rpx;
   height: 40rpx;
   color: #b2b2b2;
+  text-align:right;
+}
+
+.right_switch_button {
+  flex-grow: 1;
+  margin-right: 30rpx;
   text-align:right;
 }
 
@@ -186,3 +206,46 @@ page {
   width: 50px;
 }
 
+.column {
+  border: 2px #66ccff solid;
+}
+.flex{
+  display: flex;
+}
+
+.cell {
+  padding: 10rpx;
+  border-top: 2px #66ccff solid;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-size: 14px;
+}
+
+.head_cell {
+  padding: 10rpx;
+  border-top: 2px #66ccff solid;
+  min-height: 48rpx;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  font-size: 16px;
+  color: #2a8dbe;
+}
+
+.head_cell:first-child {
+  border-top: none;
+  background-color: #ffb9b9b4;
+}
+
+/* .cell:nth-child(odd):not(:first-child) {
+  background-color: #eee;
+} */
+
+.column:not(:first-child) {
+  border-left: none;
+}
+
+.column:first-child {
+  color: #7f7b7b;
+}
