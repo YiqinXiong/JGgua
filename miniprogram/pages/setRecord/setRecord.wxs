@@ -1,0 +1,16 @@
+// pages/setRecord/setRecord.wxs
+/***** 获取该comeDate与上一个comeDate的日期差 */
+var now = getDate();
+
+var filter = {
+	getInterval: function (now_date, last_date) {
+		var nd = getDate(now_date)
+		var ld = getDate(last_date)
+		return parseInt((Date.parse(nd) - Date.parse(ld)) / (1000 * 60 * 60 * 24))
+	}
+}
+
+module.exports = {
+	date: now,
+	getInterval: filter.getInterval
+}

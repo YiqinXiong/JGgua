@@ -31,7 +31,7 @@ Page({
 		sizeList: [], //存储每一列最长的长度
 		head: [{
 			"key": "index",
-			"name": "序号"
+			"name": "#"
 		}, {
 			"key": "comeDate",
 			"name": "她来了"
@@ -40,7 +40,10 @@ Page({
 			"name": "她走了"
 		}, {
 			"key": "duration",
-			"name": "持续天数"
+			"name": "持续"
+		}, {
+			"key": "interval",
+			"name": "相距"
 		}] //表头
 	},
 
@@ -212,6 +215,24 @@ Page({
 			tmplIds: ['MHOvPKqWjA2lwCMUyQ7kv_6v-PplmnVvoTgzMxR5Dm4', 'iR9X1sDnvalF-m175DI2Rv9tGSpzpwNdXt40gCj2SUU'],
 			success(res) {
 				console.log(res)
+				// db.collection('timingTasks').add({
+				// 	data: {
+				// 		preComeDate: this.data.preComeDate,
+				// 		preEndDate:
+
+				// 	},
+				// 	success: res => {
+				// 		wx.showToast({
+				// 			title: 'gua, 保存成功',
+				// 		})
+				// 		// 修改全局变量docId（记录编号）和resLength（记录条目数）
+				// 		app.globalData.docId = res._id
+				// 		app.globalData.resLength = 1
+				// 	},
+				// 	fail: err => {
+				// 		console.error('[onUnload] [新增] 失败：', err)
+				// 	}
+				// })
 			},
 			fail(err) {
 				console.error('requestSubscribeMessage调用失败', err);
@@ -405,12 +426,12 @@ Page({
 			let head = this.data.head
 			let body = this.data.obj
 			for (let curHead in head) {
-				if (curHead == 0) {
+				if (!(curHead > 0 && curHead < 4)) {
 					sizeList[curHead] = head[curHead].name.length;
 					continue;
 				}
 				for (let curLine in body) {
-					console.log(curHead, curLine)
+					// console.log(curHead, curLine)
 					//初始化每一列的长度
 					sizeList[curHead] = sizeList[curHead] || head[curHead].name.length;
 					//得到每一列中 每一个单元格的内容
