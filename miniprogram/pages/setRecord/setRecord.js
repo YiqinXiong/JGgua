@@ -453,8 +453,8 @@ Page({
 				tempLength--
 				continue
 			}
-			//不统计近12个月以前的数据
-			if (temp.length > 12 && i < (temp.length - 12)) {
+			//不统计近6个月以前的数据
+			if (temp.length > 6 && i < (temp.length - 6)) {
 				tempLength--
 				continue
 			}
@@ -467,8 +467,9 @@ Page({
 			if (duration >= 0) {
 				tempSumDuration += duration
 			}
-			// 仅在i>0时统计两次经期的comeDate差距
-			if (i > 0) {
+			let threshold = (temp.length - 6) < 0 ? 0 : (temp.length - 6)
+			// 仅在i > temp.length - 6时统计两次经期的comeDate差距
+			if (i > threshold) {
 				lastComeDate = new Date(temp[i - 1].comeDate)
 				var interval = parseInt((comeDate.getTime() - lastComeDate.getTime()) / (1000 * 60 * 60 * 24));
 				// console.log('第', i, '个和第', i - 1, '个的comeDate差距为：', interval)
