@@ -1,66 +1,71 @@
 <!--miniprogram/pages/about/about.wxml-->
 <view class="container">
-
-  <view class="about-page">
-      <view class="tag-tag" >
-          <view class="section-1">
-              <view class="avatar">
-                  <image src="../../images/logo.png"></image>
-              </view>
-              <view class="detail">
-                <view class="name flex1">
-                    <text>gua经理</text>
+    <view class="about-page">
+        <view class="tag-tag">
+            <view class="section-1">
+                <view class="avatar">
+                    <image src="../../images/logo.png"></image>
                 </view>
-                <view class="comp flex1">
-                    <image src="../../res/icon/profession.png"></image>  <text> 一个送给呱呱的小礼物</text>
+                <view class="detail">
+                    <view class="name flex1">
+                        <text>gua经理 v1.2.0</text>
+                    </view>
+                    <view class="comp flex1">
+                        <image src="../../res/icon/profession.png"></image> <text> 一个送给呱呱的小礼物</text>
+                    </view>
+                    <view class="loca flex1">
+                        <image src="../../res/icon/about0.png"></image><text> 作者：熊老板</text>
+                        <image src="../../res/icon/male.png"></image>
+                    </view>
+                    <view class="loca flex1">
+                        <image src="../../res/icon/about.png"></image><text> 使用者：呱呱</text>
+                        <image src="../../res/icon/female.png"></image>
+                    </view>
                 </view>
-                <view class="loca flex1">
-                    <image src="../../res/icon/about0.png"></image><text> 作者：熊老板</text>
-                    <image src="../../res/icon/male.png"></image>
-                </view>
-								<view class="loca flex1">
-                    <image src="../../res/icon/about.png"></image><text> 使用者：呱呱</text>
-                    <image src="../../res/icon/female.png"></image>
-                </view>
-              </view>
-          </view>
-          <view class="section-2">
-             <view class="section-2-detail">
-                <view class="comp flex1">
-                    <text>—— 爱你就像爱生命</text>
-                </view>
-              </view>
-            <view class="section-3">
-                <image src="../../res/icon/guagua.png"></image>
             </view>
-          </view>
-      </view>
+            <view class="section-2">
+                <view class="section-2-detail">
+                    <view class="comp flex1">
+                        <text>—— 爱你就像爱生命</text>
+                    </view>
+                </view>
+                <view class="section-3">
+                    <image src="../../res/icon/guagua.png"></image>
+                </view>
+            </view>
+        </view>
 
-      <view class="person-introduction">
-          <view class="person-introduction-title1">
-              <text>{{userProfile.title1}}</text>
-          </view>
-          <view  class="person-introduction-desc">
-              <text>{{userProfile.introduction1}}</text>
-          </view>
-					<view class="person-introduction-title2">
-              <text>{{userProfile.title2}}</text>
-          </view>
-          <view  class="person-introduction-desc">
-              <text>{{userProfile.introduction2}}</text>
-          </view>
-					<view class="person-introduction-title3">
-              <text>{{userProfile.title3}}</text>
-          </view>
-          <view  class="person-introduction-desc">
-              <text>{{userProfile.introduction3}}</text>
-          </view>
-					<view class="person-introduction-title4">
-              <text>{{userProfile.title4}}</text>
-          </view>
-          <view  class="person-introduction-desc">
-              <text>{{userProfile.introduction4}}</text>
-          </view>
-      </view>
-  </view>
+        <view class="person-introduction">
+            <view class="person-introduction-title1">
+                <text>{{userProfile.title1}}</text>
+            </view>
+            <view class="person-introduction-desc">
+                <text>{{userProfile.introduction1}}</text>
+            </view>
+            <view class="person-introduction-title2">
+                <text>{{userProfile.title2}}</text>
+            </view>
+            <view class="person-introduction-desc">
+                <text>{{userProfile.introduction2}}</text>
+            </view>
+            <view class="person-introduction-title3">
+                <text>{{userProfile.title3}}</text>
+            </view>
+            <view class="person-introduction-desc">
+                <text>{{userProfile.introduction3}}</text>
+            </view>
+            <view class="person-introduction-title4">
+                <text>{{userProfile.title4}}</text>
+            </view>
+            <view class="person-introduction-desc">
+                <text>{{userProfile.introduction4}}</text>
+            </view>
+            <view class="person-introduction-title1">
+                <text>{{userProfile.title5}}</text>
+            </view>
+            <view class="person-introduction-desc">
+                <text>{{userProfile.introduction5}}</text>
+            </view>
+        </view>
+    </view>
 </view>

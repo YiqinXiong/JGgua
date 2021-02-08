@@ -24,6 +24,8 @@ Page({
 		resLength: 0, //查询结果的条目数，初始为0
 		// openId: '',
 		docId: '',
+		task0docId: '',
+		task1docId: '',
 		startDate: startDate,
 		endDate: util.getCurrentDay(),
 		objChanged: false,
@@ -92,9 +94,65 @@ Page({
 			})
 		}
 	},
-	/***** 页面初次渲染完成，统计Avg值，给出预测值 */
+	/***** 页面初次渲染完成，统计Avg值，给出预测值，测试timingTask条目 */
 	onReady: function () {
 		this.timeCounter()
+		// 如果该用户没有timingTask条目，则进行初次创建
+		const db = wx.cloud.database()
+		var that = this
+		db.collection('timingTask0').where({
+			openid: app.globalData.globalOpenId
+		}).get({
+			success: function (res) {
+				console.log(res.data)
+				if (res.data.length == 0) {
+					db.collection('timingTask0').add({
+						data: {
+							openid: app.globalData.globalOpenId,
+							preComeDate: ''
+						},
+						success: res => {
+							console.log(res)
+							that.setData({
+								task0docId: res._id
+							})
+						}
+					})
+				} else {
+					console.log('res.data[0]._id', res.data[0]._id)
+					that.setData({
+						task0docId: res.data[0]._id
+					})
+				}
+			}
+		})
+		db.collection('timingTask1').where({
+			openid: app.globalData.globalOpenId
+		}).get({
+			success: function (res) {
+				console.log(res.data)
+				if (res.data.length == 0) {
+					db.collection('timingTask1').add({
+						data: {
+							openid: app.globalData.globalOpenId,
+							preEndDate: '',
+							nickName: ''
+						},
+						success: res => {
+							console.log(res)
+							that.setData({
+								task1docId: res._id
+							})
+						}
+					})
+				} else {
+					console.log('res.data[0]._id', res.data[0]._id)
+					that.setData({
+						task1docId: res.data[0]._id
+					})
+				}
+			}
+		})
 	},
 	/***** 页面隐藏时存储数据到数据库 */
 	onHide: function () {
@@ -164,6 +222,22 @@ Page({
 			objChanged: true
 		})
 	},
+	/***** 工具函数，给出日期preComeDate和天数duration，得到x天之后的日期 */
+	getPreEndDate: function (preComeDate, duration) {
+		// dd为预测的结束日期，Date类型
+		var dd = new Date(preComeDate)
+		dd.setDate(dd.getDate() + duration)
+		// console.log(dd)
+		var y = dd.getFullYear();
+		var m = dd.getMonth() + 1
+		var d = dd.getDate()
+		if (m < 10)
+			m = '0' + m;
+		if (d < 10)
+			d = '0' + d
+		// 将dd转为'yyyy-mm-dd'格式，作为preEndDate返回
+		return y + "-" + m + "-" + d
+	},
 	/***** 保存修改 */
 	onTapSave: function (e) {
 		const db = wx.cloud.database()
@@ -208,36 +282,67 @@ Page({
 		})
 
 		// 最后订阅下一次的经期提醒
-		console.log(wx.getSetting({
+		const preComeDate = this.data.preComeDate
+		const preEndDate = this.getPreEndDate(this.data.preComeDate, this.data.avgDuration)
+		const userInfo = app.globalData.globalUserInfo
+		const taskDocID = [this.data.task0docId, this.data.task1docId]
+		console.log('taskDocID:', taskDocID)
+		console.log(userInfo)
+		wx.getSetting({
 			withSubscriptions: true,
-		}))
-		wx.requestSubscribeMessage({
-			tmplIds: ['MHOvPKqWjA2lwCMUyQ7kv_6v-PplmnVvoTgzMxR5Dm4', 'iR9X1sDnvalF-m175DI2Rv9tGSpzpwNdXt40gCj2SUU'],
 			success(res) {
-				console.log(res)
-				// db.collection('timingTasks').add({
-				// 	data: {
-				// 		preComeDate: this.data.preComeDate,
-				// 		preEndDate:
+				// console.log(res)
+				const settingBeforeSubscribe = res.subscriptionsSetting
+				// console.log(settingBeforeSubscribe)
+				// res.subscriptionsSetting = {
+				//   mainSwitch: true, // 订阅消息总开关
+				//   itemSettings: {   // 每一项开关
+				//     SYS_MSG_TYPE_INTERACTIVE: 'accept', // 小游戏系统订阅消息
+				//     SYS_MSG_TYPE_RANK: 'accept'
+				//     zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE: 'reject', // 普通一次性订阅消息
+				//     ke_OZC_66gZxALLcsuI7ilCJSP2OJ2vWo2ooUPpkWrw: 'ban',
+				//   }
+				// }
 
-				// 	},
-				// 	success: res => {
-				// 		wx.showToast({
-				// 			title: 'gua, 保存成功',
-				// 		})
-				// 		// 修改全局变量docId（记录编号）和resLength（记录条目数）
-				// 		app.globalData.docId = res._id
-				// 		app.globalData.resLength = 1
-				// 	},
-				// 	fail: err => {
-				// 		console.error('[onUnload] [新增] 失败：', err)
-				// 	}
-				// })
-			},
-			fail(err) {
-				console.error('requestSubscribeMessage调用失败', err);
+				// 经期提醒模板id和经期结束提醒模板id
+				const tmplID = ['MHOvPKqWjA2lwCMUyQ7kv_6v-PplmnVvoTgzMxR5Dm4', 'iR9X1sDnvalF-m175DI2Rv9tGSpzpwNdXt40gCj2SUU']
+				// 只有当两个模板都已被推送，才订阅下一次推送
+				wx.requestSubscribeMessage({
+					tmplIds: tmplID,
+					success(res) {
+						console.log(res)
+						db.collection('timingTask0').doc(taskDocID[0]).update({
+							data: {
+								preComeDate: preComeDate
+							},
+							success: res => {
+								console.log(res)
+							},
+							fail: err => {
+								console.error(err)
+							}
+						})
+						db.collection('timingTask1').doc(taskDocID[1]).update({
+							data: {
+								preEndDate: preEndDate,
+								nickName: userInfo.nickName
+							},
+							success: res => {
+								console.log(res)
+							},
+							fail: err => {
+								console.error(err)
+							}
+						})
+					},
+					fail(err) {
+						console.error('requestSubscribeMessage调用失败', err);
+					}
+				})
 			}
 		})
+
+
 	},
 	/***** 选择器选择时触发，将当前日期设置为选择到的日期 */
 	bindPickerRecentChange_Come: function (e) {

@@ -24,6 +24,7 @@ Page({
                 logged: true
               })
               app.globalData.logged = true
+              app.globalData.globalUserInfo = res.userInfo
             }
           })
         }
@@ -68,7 +69,6 @@ Page({
 			_openid: app.globalData.globalOpenId
 		}).get({
 			success: res => {
-				console.log('yeah!')
         console.log('[onLoad] [查询] 成功: ', res)
         app.globalData.resLength = res.data.length //此用户在数据库中的数据条目数
         app.globalData.docId = res.data.length == 0 ? '' : res.data[0]._id
