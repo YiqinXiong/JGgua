@@ -4,9 +4,10 @@
 		"pages/about/about",
 		"pages/setRecord/setRecord",
 		"pages/calendar/calendar"
-		
-		
-		
+	],
+	"requiredBackgroundModes": [
+		"audio",
+		"location"
 	],
 	"window": {
 		"backgroundColor": "#f6f6f6",

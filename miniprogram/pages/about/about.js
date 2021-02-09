@@ -1,5 +1,5 @@
 // miniprogram/pages/about/about.js
-const app = getApp()
+var app = getApp()
 
 const back = wx.getBackgroundAudioManager()
 
@@ -22,88 +22,88 @@ Page({
 			title5: '5. 咱们一周年啦！',
 			introduction5: '\t上面那一条是写在2020年5月20日的，当时咱们才相恋100天，现在这个时间跨度已经拉长到365天，从此我们的路要用年这个单位来计算啦！\n\t在一周年的契机下，没能把我做的吃的带给你，礼物也还没做好，那只能回归我的老本行，把gua经理的功能扩充完善一下。（可不是偷懒，这几天我肝爆了！\n\t让我们来回味一下你提的需求：首先是把计算均值的范围调整到12个月以内，然后是要新增一个页面查看表格状的历史记录，再就是将运动打卡功能从开关改成按钮来支持一天多次打卡。其实还有一个最早提出的需求，是和你一起逛校园的时候你说的，就是增加小程序消息推送的功能，没想到我一直记着你却给忘了，哈哈哈哈哈猪呱呱。\n\t上述需求呢，除了运动打卡功能的修改之外，全部都实现了，还实现了你临时提出的“在表格中查看每两次姨妈间隔”的需求（临时加需求不愧是你啊。除了那些优化的内容之外，以后gua经理会在来姨妈3天前发推送提醒你注意饮食和休息，以及会在姨妈结束之后及时提醒你回到gua经理里面做好记录，这个功能真是废了半条命才实现的，技术相关的就不展开说了。\n\t恍惚之间我们已经走了一年，热烈依旧，挚爱依旧，每天都爱着对方，这是最好的状态，也是我们一年来的日常了。\n\t最后的最后，gua经理会一直更新（因为还有需求，而且可能会有很多未知bug···），正如我会一直在你身边，爱你呀，一周年快乐！',
 		},
+	},
 
-		/**
-		 * 生命周期函数--监听页面加载
-		 */
-		onLoad: function (options) {
-			// 获取登陆状态
-			if (!app.globalData.logged) {
-				wx.getSetting({
-					success: res => {
-						if (res.authSetting['scope.userInfo']) {
-							// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-							app.globalData.logged = true
-						}
-					}
-				})
-			}
-
-			// 播放背景音乐
-			this.playMusic()
-		},
-
-		/**
-		 * 生命周期函数--监听页面初次渲染完成
-		 */
-		onReady: function () {
-
-		},
-
-		/**
-		 * 生命周期函数--监听页面显示
-		 */
-		onShow: function () {
-
-		},
-
-		/**
-		 * 生命周期函数--监听页面隐藏
-		 */
-		onHide: function () {
-
-		},
-
-		/**
-		 * 生命周期函数--监听页面卸载
-		 */
-		onUnload: function () {
-
-		},
-
-		/**
-		 * 页面相关事件处理函数--监听用户下拉动作
-		 */
-		onPullDownRefresh: function () {
-
-		},
-
-		/**
-		 * 页面上拉触底事件的处理函数
-		 */
-		onReachBottom: function () {
-
-		},
-
-		/**
-		 * 用户点击右上角分享
-		 */
-		onShareAppMessage: function () {
-
-		},
-
-		// 背景音乐播放
-		playMusic: function () {
+	// 循环播放音乐
+	playMusic: function () {
+		console.log('[playMusic] 播放音乐')
+		back.title = 'I\'m Yours'
+		// 音乐的mp3文件上传在自己的阿里云对象存储OSS中，链接从阿里云控制台复制得到
+		back.src = 'https://xyq6785665.oss-cn-shenzhen.aliyuncs.com/music/Jason%20Mraz%20-%20I%27m%20Yours.mp3'
+		console.log('播放音乐')
+		back.onEnded(() => {
 			player()
+		})
+	},
 
-			function player() {
-				back.title = 'All about us'
-				back.src = url('https://qdct02.baidupcs.com/file/4bd74a7f6227e7a18d5b4ac65a7b902c?bkt=en-0f64e6ca9b24f0bcc518441d459a00b0254b238b0eeda79388b5da3d4701b3541fc147902e3d386e174ee01e9b0ef0a7f6a9e757f0fd233757a321ac4a1bb0e5&fid=2919466913-250528-1116532663480768&time=1589959503&sign=FDTAXUGERLQlBHSKfW-DCb740ccc5511e5e8fedcff06b081203-hV9BnF62yHQLbS9rSDa8GLTEl4A%3D&to=91&size=3306424&sta_dx=3306424&sta_cs=1456&sta_ft=mp3&sta_ct=7&sta_mt=7&fm2=MH%2CYangquan%2CAnywhere%2C%2Cjiangxi%2Cct&ctime=1531718166&mtime=1540877253&resv0=-1&resv1=0&resv2=rlim&resv3=5&resv4=3306424&vuk=1146031382&iv=0&htype=&randtype=&newver=1&newfm=1&secfm=1&flow_ver=3&pkey=en-90ee6d57811ab6102c5608a91ce8769781797ac4240425eeea79776be3890d6c09582c59238895482ef177d3c24e0efed35816492ac2b7ce305a5e1275657320&sl=76480590&expires=8h&rt=sh&r=778606753&vbdid=2990663313&fin=he+is+we-all+about+us.mp3&fn=he+is+we-all+about+us.mp3&rtype=1&dp-logid=3261893984811760159&dp-callid=0.1&hps=1&tsl=80&csl=80&fsl=-1&csign=omJW1sNLplGzzZLaaOy73gy%2BB%2Fo%3D&so=0&ut=6&uter=4&serv=0&uc=3179540650&ti=8f692c02a37bcacce4586affcacfcbfbd3161c4f88690f1d&hflag=30&adg=c_bae703930c32c3989bd2090de5bdb020&reqlabel=250528_f_c6e83118d97752f2c5414f41c5851059_-1_6aa92b5151098b0bb181e71cb1ecccd6&by=themis')
-				console.log('播放音乐')
-				back.onEnded(() => {
-					player()
-				})
-			}
+	/**
+	 * 生命周期函数--监听页面加载
+	 */
+	onLoad: function () {
+		console.log('[onLoad]')
+		// 获取登陆状态
+		if (!getApp().globalData.logged) {
+			wx.getSetting({
+				success: res => {
+					if (res.authSetting['scope.userInfo']) {
+						// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+						app.globalData.logged = true
+					}
+				}
+			})
 		}
+	},
+
+	/**
+	 * 生命周期函数--监听页面初次渲染完成
+	 */
+	onReady: function () {
+		console.log('[onReady]')
+		// 播放背景音乐
+		this.playMusic()
+	},
+
+	/**
+	 * 生命周期函数--监听页面显示
+	 */
+	onShow: function () {
+		console.log('[onShow]')
+		back.play()
+	},
+
+	/**
+	 * 生命周期函数--监听页面隐藏
+	 */
+	onHide: function () {
+		console.log('onHide')
+		back.pause()
+	},
+
+	/**
+	 * 生命周期函数--监听页面卸载
+	 */
+	onUnload: function () {
+		console.log('[onUnload]')
+	},
+
+	/**
+	 * 页面相关事件处理函数--监听用户下拉动作
+	 */
+	onPullDownRefresh: function () {
+
+	},
+
+	/**
+	 * 页面上拉触底事件的处理函数
+	 */
+	onReachBottom: function () {
+
+	},
+
+	/**
+	 * 用户点击右上角分享
+	 */
+	onShareAppMessage: function () {
+
 	}
 })

@@ -10,7 +10,7 @@ import {
 	startDate
 } from '../../utils/const.js';
 
-const app = getApp()
+var app = getApp()
 
 Page({
 
@@ -63,6 +63,7 @@ Page({
 	},
 	/***** 页面初次加载时读取数据库数据 */
 	onLoad: function () {
+		console.log('[onLoad] 进入onLoad生命周期')
 		// if (app.globalData.globalOpenId) {
 		// 	this.setData({
 		// 		openId: app.globalData.globalOpenId
@@ -74,7 +75,7 @@ Page({
 			})
 		}
 
-		console.log('app.globalData.resLength:', app.globalData.resLength)
+		console.log('[onLoad] app.globalData.resLength:', app.globalData.resLength)
 		if (app.globalData.resLength > 0) {
 			// 查询数据并填入obj中
 			var that = this
@@ -96,6 +97,7 @@ Page({
 	},
 	/***** 页面初次渲染完成，统计Avg值，给出预测值，测试timingTask条目 */
 	onReady: function () {
+		console.log('[onReady] 进入onReady生命周期')
 		this.timeCounter()
 		// 如果该用户没有timingTask条目，则进行初次创建
 		const db = wx.cloud.database()
@@ -104,7 +106,7 @@ Page({
 			openid: app.globalData.globalOpenId
 		}).get({
 			success: function (res) {
-				console.log(res.data)
+				console.log('[onReady] 获取timingTask0的res.data:', res.data)
 				if (res.data.length == 0) {
 					db.collection('timingTask0').add({
 						data: {
@@ -112,14 +114,14 @@ Page({
 							preComeDate: ''
 						},
 						success: res => {
-							console.log(res)
+							console.log('[onReady] 该用户无timingTask0条目，新增条目，条目_id为:', res._id)
 							that.setData({
 								task0docId: res._id
 							})
 						}
 					})
 				} else {
-					console.log('res.data[0]._id', res.data[0]._id)
+					console.log('[onReady] 该用户有timingTask0条目，条目_id(res.data[0]._id)为:', res.data[0]._id)
 					that.setData({
 						task0docId: res.data[0]._id
 					})
@@ -130,7 +132,7 @@ Page({
 			openid: app.globalData.globalOpenId
 		}).get({
 			success: function (res) {
-				console.log(res.data)
+				console.log('[onReady] 获取timingTask1的res.data:', res.data)
 				if (res.data.length == 0) {
 					db.collection('timingTask1').add({
 						data: {
@@ -139,14 +141,14 @@ Page({
 							nickName: ''
 						},
 						success: res => {
-							console.log(res)
+							console.log('[onReady] 该用户无timingTask1条目，新增条目，条目_id为:', res._id)
 							that.setData({
 								task1docId: res._id
 							})
 						}
 					})
 				} else {
-					console.log('res.data[0]._id', res.data[0]._id)
+					console.log('[onReady] 该用户有timingTask1条目，条目_id(res.data[0]._id)为:', res.data[0]._id)
 					that.setData({
 						task1docId: res.data[0]._id
 					})
@@ -154,15 +156,20 @@ Page({
 			}
 		})
 	},
+	/***** 页面显示，每次打开页面都会调用 */
+	onShow: function () {
+		console.log('[onShow] 进入onShow生命周期')
+	},
 	/***** 页面隐藏时存储数据到数据库 */
 	onHide: function () {
+		console.log('[onHide] 进入onHide生命周期')
 		if (this.data.objChanged) {
 			wx.showModal({
 				title: '喂，这位仙女请留步',
 				content: '回去保存一下再走？',
 				success: function (res) {
 					if (res.confirm) {
-						console.log('宝贝点击了确定按钮')
+						console.log('[onHide] 宝贝点击了确定按钮')
 						wx.switchTab({
 							url: '../setRecord/setRecord',
 						})
@@ -173,13 +180,14 @@ Page({
 	},
 	/***** 页面卸载时存储数据到数据库 */
 	onUnload: function () {
+		console.log('[onUnload] 进入onUnload生命周期')
 		if (this.data.objChanged) {
 			wx.showModal({
 				title: '喂，这位仙女请留步',
 				content: '真的不保存一下再走嘛？',
 				success: function (res) {
 					if (res.confirm) {
-						console.log('宝贝点击了确定按钮')
+						console.log('[onUnload] 宝贝点击了确定按钮')
 						wx.switchTab({
 							url: '../setRecord/setRecord',
 						})

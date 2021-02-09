@@ -1,4 +1,4 @@
-const app = getApp()
+var app = getApp()
 
 const conf = {
 	data: {

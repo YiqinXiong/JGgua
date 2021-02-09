@@ -1,5 +1,5 @@
 //index.js
-const app = getApp()
+var app = getApp()
 
 Page({
   data: {
