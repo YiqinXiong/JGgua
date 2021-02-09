@@ -8,18 +8,25 @@
                 </view>
                 <view class="detail">
                     <view class="name flex1">
-                        <text>gua经理 v1.2.0</text>
+                        <text>gua经理</text>
                     </view>
                     <view class="comp flex1">
-                        <image src="../../res/icon/profession.png"></image> <text> 一个送给呱呱的小礼物</text>
+                        <image src="../../res/icon/profession.png"></image>
+                        <text> 一个送给呱呱的小礼物</text>
                     </view>
                     <view class="loca flex1">
-                        <image src="../../res/icon/about0.png"></image><text> 作者：熊老板</text>
+                        <image src="../../res/icon/about0.png"></image>
+                        <text> 作者：熊老板</text>
                         <image src="../../res/icon/male.png"></image>
                     </view>
                     <view class="loca flex1">
-                        <image src="../../res/icon/about.png"></image><text> 使用者：呱呱</text>
+                        <image src="../../res/icon/about.png"></image>
+                        <text> 献给：呱呱</text>
                         <image src="../../res/icon/female.png"></image>
+                    </view>
+                    <view class="loca flex1">
+                        <image src="../../res/icon/list.png"></image>
+                        <text> 版本：1.2.2</text>
                     </view>
                 </view>
             </view>
@@ -27,6 +34,10 @@
                 <view class="section-2-detail">
                     <view class="comp flex1">
                         <text>—— 爱你就像爱生命</text>
+                    </view>
+                    <view class="comp flex1">
+                        <image src="../../res/icon/github.png"></image>
+                        <text> GitHub：https://github.com/YiqinXiong/JGgua/commits</text>
                     </view>
                 </view>
                 <view class="section-3">

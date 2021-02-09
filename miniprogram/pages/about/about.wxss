@@ -2,13 +2,13 @@
 
 .about-page {
 	flex: 1;
-	margin-top: 100px;
+	margin-top: 0px;
 	background-color: #f6f6f6;
 }
 
 .tag-tag {
 	width: 90%;
-	height: 300rpx;
+	height: 350rpx;
 	margin: 0 auto;
 	margin-top: -150rpx;
 	/* background-color: #f7f7f7; */
