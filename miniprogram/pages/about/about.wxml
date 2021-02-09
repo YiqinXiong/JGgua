@@ -26,7 +26,7 @@
                     </view>
                     <view class="loca flex1">
                         <image src="../../res/icon/list.png"></image>
-                        <text> 版本：1.2.2</text>
+                        <text> 版本：1.2.3</text>
                     </view>
                 </view>
             </view>
