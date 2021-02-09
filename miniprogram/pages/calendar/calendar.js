@@ -159,81 +159,86 @@ const conf = {
 	/***** 页面Hide时执行，页面周期函数在组件js中的pageLifetime中设置 */
 	onHide: function () {
 		console.log('onHide')
-		const db = wx.cloud.database()
-		// 若条目为0说明不曾有数据，则使用add，否则使用update
-		if (app.globalData.resLength == 0) {
-			db.collection('records').add({
-				data: {
-					one_user_record: [],
-					card_record: this.calendar.getTodoLabels(),
-					tips_record: this.data.tips_record
-				},
-				success: res => {
-					// 修改全局变量docId（记录编号）和resLength（记录条目数）
-					app.globalData.docId = res._id
-					app.globalData.resLength = 1
-				},
-				fail: err => {
-					console.error('[onHide] [新增] 失败：', err)
-				}
-			})
-		} else {
-			db.collection('records').doc(app.globalData.docId).update({
-				data: {
-					card_record: this.calendar.getTodoLabels(),
-					tips_record: this.data.tips_record
-				},
-				success: res => {
-					console.log('[onHide] [更新] 成功：', res)
-				},
-				fail: err => {
-					console.error('[onHide] [更新] 失败：', err)
-				}
-			})
+		// 只有登陆后才保存到云端
+		if (getApp().globalData.logged) {
+			const db = wx.cloud.database()
+			// 若条目为0说明不曾有数据，则使用add，否则使用update
+			if (app.globalData.resLength == 0) {
+				db.collection('records').add({
+					data: {
+						one_user_record: [],
+						card_record: this.calendar.getTodoLabels(),
+						tips_record: this.data.tips_record
+					},
+					success: res => {
+						// 修改全局变量docId（记录编号）和resLength（记录条目数）
+						app.globalData.docId = res._id
+						app.globalData.resLength = 1
+					},
+					fail: err => {
+						console.error('[onHide] [新增] 失败：', err)
+					}
+				})
+			} else {
+				db.collection('records').doc(app.globalData.docId).update({
+					data: {
+						card_record: this.calendar.getTodoLabels(),
+						tips_record: this.data.tips_record
+					},
+					success: res => {
+						console.log('[onHide] [更新] 成功：', res)
+					},
+					fail: err => {
+						console.error('[onHide] [更新] 失败：', err)
+					}
+				})
+			}
 		}
 	},
 	/***** 页面onUnload时执行，页面周期函数在组件js中的pageLifetime中设置 */
 	onUnload: function () {
 		console.log('onUnload')
-		const db = wx.cloud.database()
-		// 若条目为0说明不曾有数据，则使用add，否则使用update
-		if (app.globalData.resLength == 0) {
-			db.collection('records').add({
-				data: {
-					one_user_record: [],
-					card_record: this.calendar.getTodoLabels(),
-					tips_record: this.data.tips_record
-				},
-				success: res => {
-					// 修改全局变量docId（记录编号）和resLength（记录条目数）
-					app.globalData.docId = res._id
-					app.globalData.resLength = 1
-				},
-				fail: err => {
-					console.error('[onUnload] [新增] 失败：', err)
-				}
-			})
-		} else {
-			db.collection('records').doc(app.globalData.docId).update({
-				data: {
-					card_record: this.calendar.getTodoLabels(),
-					tips_record: this.data.tips_record
-				},
-				success: res => {
-					console.log('[onUnload] [更新] 成功：', res)
-				},
-				fail: err => {
-					console.error('[onUnload] [更新] 失败：', err)
-				}
-			})
+		// 只有登陆后才保存到云端
+		if (getApp().globalData.logged) {
+			const db = wx.cloud.database()
+			// 若条目为0说明不曾有数据，则使用add，否则使用update
+			if (app.globalData.resLength == 0) {
+				db.collection('records').add({
+					data: {
+						one_user_record: [],
+						card_record: this.calendar.getTodoLabels(),
+						tips_record: this.data.tips_record
+					},
+					success: res => {
+						// 修改全局变量docId（记录编号）和resLength（记录条目数）
+						app.globalData.docId = res._id
+						app.globalData.resLength = 1
+					},
+					fail: err => {
+						console.error('[onUnload] [新增] 失败：', err)
+					}
+				})
+			} else {
+				db.collection('records').doc(app.globalData.docId).update({
+					data: {
+						card_record: this.calendar.getTodoLabels(),
+						tips_record: this.data.tips_record
+					},
+					success: res => {
+						console.log('[onUnload] [更新] 成功：', res)
+					},
+					fail: err => {
+						console.error('[onUnload] [更新] 失败：', err)
+					}
+				})
+			}
 		}
 	},
 	/***** 页面onLoad时执行，页面周期函数在组件js中的pageLifetime中设置 */
 	onLoad: function () {
-
-		//加载数据
+		// 登录了则直接加载云端数据
 		console.log('app.globalData.resLength:', app.globalData.resLength)
-		if (app.globalData.resLength > 0) {
+		if (getApp().globalData.logged && app.globalData.resLength > 0) {
 			// 查询数据并填入card_record和tips_record中
 			var that = this
 			const db = wx.cloud.database()

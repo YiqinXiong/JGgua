@@ -1,9 +1,9 @@
 {
 	"pages": [
-		"pages/index/index",
 		"pages/about/about",
 		"pages/setRecord/setRecord",
-		"pages/calendar/calendar"
+		"pages/calendar/calendar",
+		"pages/index/index"
 	],
 	"requiredBackgroundModes": [
 		"audio",

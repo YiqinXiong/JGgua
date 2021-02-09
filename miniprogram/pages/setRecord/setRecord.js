@@ -50,7 +50,7 @@ Page({
 	},
 
 	/***** 获取openid */
-	getOpenId() {
+	getOpenId: function () {
 		// wx.cloud.callFunction({
 		// 	name: 'login',
 		// 	complete: res => {
@@ -64,30 +64,31 @@ Page({
 	/***** 页面初次加载时读取数据库数据 */
 	onLoad: function () {
 		console.log('[onLoad] 进入onLoad生命周期')
-		// if (app.globalData.globalOpenId) {
-		// 	this.setData({
-		// 		openId: app.globalData.globalOpenId
-		// 	})
-		// }
-		if (app.globalData.docId) {
-			this.setData({
-				docId: app.globalData.docId
-			})
-		}
-
-		console.log('[onLoad] app.globalData.resLength:', app.globalData.resLength)
-		if (app.globalData.resLength > 0) {
-			// 查询数据并填入obj中
-			var that = this
+		// 登录了则直接加载云端数据
+		if (getApp().globalData.logged) {
+			// console.log('[onLoad] logged!!!')
+			// 查询当前用户在数据库中的数据条目数
 			const db = wx.cloud.database()
+			const openid = getApp().globalData.globalOpenId
+			console.log('[onLoad] openid:', openid)
+			var that = this
 			db.collection('records').where({
-				_id: app.globalData.docId
+				_openid: openid
 			}).get({
 				success: res => {
-					that.setData({
-						obj: res.data[0].one_user_record
-					})
-					console.log('res:', res)
+					console.log('[onLoad] [查询] 成功: ', res)
+					app.globalData.resLength = res.data.length //此用户在数据库中的数据条目数
+					app.globalData.docId = res.data.length == 0 ? '' : res.data[0]._id
+					// 得到该用户对应的记录的唯一docId（_id），并填入本地obj
+					console.log('[onLoad] [getApp().globalData.docId]', getApp().globalData.docId)
+					console.log('[onLoad] [app.globalData.resLength]:', getApp().globalData.resLength)
+					if (res.data.length > 0) {
+						// 将数据库数据填入本地 docId 和 obj 中
+						that.setData({
+							docId: res.data[0]._id,
+							obj: res.data[0].one_user_record
+						})
+					}
 				},
 				fail: err => {
 					console.error('[onLoad] [查询] 失败：', err)
@@ -99,62 +100,64 @@ Page({
 	onReady: function () {
 		console.log('[onReady] 进入onReady生命周期')
 		this.timeCounter()
-		// 如果该用户没有timingTask条目，则进行初次创建
-		const db = wx.cloud.database()
-		var that = this
-		db.collection('timingTask0').where({
-			openid: app.globalData.globalOpenId
-		}).get({
-			success: function (res) {
-				console.log('[onReady] 获取timingTask0的res.data:', res.data)
-				if (res.data.length == 0) {
-					db.collection('timingTask0').add({
-						data: {
-							openid: app.globalData.globalOpenId,
-							preComeDate: ''
-						},
-						success: res => {
-							console.log('[onReady] 该用户无timingTask0条目，新增条目，条目_id为:', res._id)
-							that.setData({
-								task0docId: res._id
-							})
-						}
-					})
-				} else {
-					console.log('[onReady] 该用户有timingTask0条目，条目_id(res.data[0]._id)为:', res.data[0]._id)
-					that.setData({
-						task0docId: res.data[0]._id
-					})
+		// 如果该用户登陆了，且没有timingTask条目，则进行初次创建
+		if (getApp().globalData.logged) {
+			const db = wx.cloud.database()
+			var that = this
+			db.collection('timingTask0').where({
+				openid: app.globalData.globalOpenId
+			}).get({
+				success: function (res) {
+					console.log('[onReady] 获取timingTask0的res.data:', res.data)
+					if (res.data.length == 0) {
+						db.collection('timingTask0').add({
+							data: {
+								openid: app.globalData.globalOpenId,
+								preComeDate: ''
+							},
+							success: res => {
+								console.log('[onReady] 该用户无timingTask0条目，新增条目，条目_id为:', res._id)
+								that.setData({
+									task0docId: res._id
+								})
+							}
+						})
+					} else {
+						console.log('[onReady] 该用户有timingTask0条目，条目_id(res.data[0]._id)为:', res.data[0]._id)
+						that.setData({
+							task0docId: res.data[0]._id
+						})
+					}
 				}
-			}
-		})
-		db.collection('timingTask1').where({
-			openid: app.globalData.globalOpenId
-		}).get({
-			success: function (res) {
-				console.log('[onReady] 获取timingTask1的res.data:', res.data)
-				if (res.data.length == 0) {
-					db.collection('timingTask1').add({
-						data: {
-							openid: app.globalData.globalOpenId,
-							preEndDate: '',
-							nickName: ''
-						},
-						success: res => {
-							console.log('[onReady] 该用户无timingTask1条目，新增条目，条目_id为:', res._id)
-							that.setData({
-								task1docId: res._id
-							})
-						}
-					})
-				} else {
-					console.log('[onReady] 该用户有timingTask1条目，条目_id(res.data[0]._id)为:', res.data[0]._id)
-					that.setData({
-						task1docId: res.data[0]._id
-					})
+			})
+			db.collection('timingTask1').where({
+				openid: app.globalData.globalOpenId
+			}).get({
+				success: function (res) {
+					console.log('[onReady] 获取timingTask1的res.data:', res.data)
+					if (res.data.length == 0) {
+						db.collection('timingTask1').add({
+							data: {
+								openid: app.globalData.globalOpenId,
+								preEndDate: '',
+								nickName: ''
+							},
+							success: res => {
+								console.log('[onReady] 该用户无timingTask1条目，新增条目，条目_id为:', res._id)
+								that.setData({
+									task1docId: res._id
+								})
+							}
+						})
+					} else {
+						console.log('[onReady] 该用户有timingTask1条目，条目_id(res.data[0]._id)为:', res.data[0]._id)
+						that.setData({
+							task1docId: res.data[0]._id
+						})
+					}
 				}
-			}
-		})
+			})
+		}
 	},
 	/***** 页面显示，每次打开页面都会调用 */
 	onShow: function () {
@@ -163,7 +166,7 @@ Page({
 	/***** 页面隐藏时存储数据到数据库 */
 	onHide: function () {
 		console.log('[onHide] 进入onHide生命周期')
-		if (this.data.objChanged) {
+		if (getApp().globalData.logged && this.data.objChanged) {
 			wx.showModal({
 				title: '喂，这位仙女请留步',
 				content: '回去保存一下再走？',
@@ -181,7 +184,7 @@ Page({
 	/***** 页面卸载时存储数据到数据库 */
 	onUnload: function () {
 		console.log('[onUnload] 进入onUnload生命周期')
-		if (this.data.objChanged) {
+		if (getApp().globalData.logged && this.data.objChanged) {
 			wx.showModal({
 				title: '喂，这位仙女请留步',
 				content: '真的不保存一下再走嘛？',
@@ -198,26 +201,19 @@ Page({
 	},
 	/***** 增加卡片 */
 	onTapAdd: function (e) {
-		if (!app.globalData.logged) {
-			wx.navigateTo({
-				url: '../index/index',
-			})
-		} else {
-			var temp = this.data.obj;
-			temp.push({
-				index: this.data.obj.length,
-				comeDate: '',
-				goDate: '',
-				duration: -1,
-				isComeFinished: false,
-				isGoFinished: false
-			});
-			this.setData({
-				obj: temp,
-				objChanged: true
-			})
-		}
-
+		var temp = this.data.obj;
+		temp.push({
+			index: this.data.obj.length,
+			comeDate: '',
+			goDate: '',
+			duration: -1,
+			isComeFinished: false,
+			isGoFinished: false
+		});
+		this.setData({
+			obj: temp,
+			objChanged: true
+		})
 	},
 	/***** 删除卡片 */
 	onTapDelete: function (e) {
@@ -248,109 +244,105 @@ Page({
 	},
 	/***** 保存修改 */
 	onTapSave: function (e) {
-		const db = wx.cloud.database()
-		// 若条目为0说明不曾有数据，则使用add，否则使用update
-		if (app.globalData.resLength == 0) {
-			db.collection('records').add({
-				data: {
-					one_user_record: this.data.obj,
-					card_record: [],
-					tips_record: []
-				},
-				success: res => {
-					wx.showToast({
-						title: 'gua, 保存成功',
-					})
-					// 修改全局变量docId（记录编号）和resLength（记录条目数）
-					app.globalData.docId = res._id
-					app.globalData.resLength = 1
-				},
-				fail: err => {
-					console.error('[onUnload] [新增] 失败：', err)
+		if (!getApp().globalData.logged) {
+			wx.showModal({
+				title: '没有登陆咋保存哦？',
+				content: '这位仙女朋友，登录一下可好？',
+				success: function (res) {
+					if (res.confirm) {
+						console.log('[onTapSave] 确认登录')
+						wx.redirectTo({
+							url: '../index/index'
+						})
+					}
 				}
 			})
 		} else {
-			db.collection('records').doc(this.data.docId).update({
-				data: {
-					one_user_record: this.data.obj
-				},
-				success: res => {
-					wx.showToast({
-						title: 'gua, 保存成功',
-					})
-					console.log('[onUnload] [更新] 成功：', res)
-				},
-				fail: err => {
-					console.error('[onUnload] [更新] 失败：', err)
-				}
-			})
-		}
-		this.setData({
-			objChanged: false
-		})
-
-		// 最后订阅下一次的经期提醒
-		const preComeDate = this.data.preComeDate
-		const preEndDate = this.getPreEndDate(this.data.preComeDate, this.data.avgDuration)
-		const userInfo = app.globalData.globalUserInfo
-		const taskDocID = [this.data.task0docId, this.data.task1docId]
-		console.log('taskDocID:', taskDocID)
-		console.log(userInfo)
-		wx.getSetting({
-			withSubscriptions: true,
-			success(res) {
-				// console.log(res)
-				const settingBeforeSubscribe = res.subscriptionsSetting
-				// console.log(settingBeforeSubscribe)
-				// res.subscriptionsSetting = {
-				//   mainSwitch: true, // 订阅消息总开关
-				//   itemSettings: {   // 每一项开关
-				//     SYS_MSG_TYPE_INTERACTIVE: 'accept', // 小游戏系统订阅消息
-				//     SYS_MSG_TYPE_RANK: 'accept'
-				//     zun-LzcQyW-edafCVvzPkK4de2Rllr1fFpw2A_x0oXE: 'reject', // 普通一次性订阅消息
-				//     ke_OZC_66gZxALLcsuI7ilCJSP2OJ2vWo2ooUPpkWrw: 'ban',
-				//   }
-				// }
-
-				// 经期提醒模板id和经期结束提醒模板id
-				const tmplID = ['MHOvPKqWjA2lwCMUyQ7kv_6v-PplmnVvoTgzMxR5Dm4', 'iR9X1sDnvalF-m175DI2Rv9tGSpzpwNdXt40gCj2SUU']
-				// 只有当两个模板都已被推送，才订阅下一次推送
-				wx.requestSubscribeMessage({
-					tmplIds: tmplID,
-					success(res) {
-						console.log(res)
-						db.collection('timingTask0').doc(taskDocID[0]).update({
-							data: {
-								preComeDate: preComeDate
-							},
-							success: res => {
-								console.log(res)
-							},
-							fail: err => {
-								console.error(err)
-							}
-						})
-						db.collection('timingTask1').doc(taskDocID[1]).update({
-							data: {
-								preEndDate: preEndDate,
-								nickName: userInfo.nickName
-							},
-							success: res => {
-								console.log(res)
-							},
-							fail: err => {
-								console.error(err)
-							}
-						})
+			const db = wx.cloud.database()
+			// 若条目为0说明不曾有数据，则使用add，否则使用update
+			if (app.globalData.resLength == 0) {
+				db.collection('records').add({
+					data: {
+						one_user_record: this.data.obj,
+						card_record: [],
+						tips_record: []
 					},
-					fail(err) {
-						console.error('requestSubscribeMessage调用失败', err);
+					success: res => {
+						wx.showToast({
+							title: 'gua, 保存成功',
+						})
+						// 修改全局变量docId（记录编号）和resLength（记录条目数）
+						app.globalData.docId = res._id
+						app.globalData.resLength = 1
+					},
+					fail: err => {
+						console.error('[onTapSave] [新增] 失败：', err)
+					}
+				})
+			} else {
+				db.collection('records').doc(this.data.docId).update({
+					data: {
+						one_user_record: this.data.obj
+					},
+					success: res => {
+						wx.showToast({
+							title: 'gua, 保存成功',
+						})
+						console.log('[onTapSave] [更新] 成功：', res)
+					},
+					fail: err => {
+						console.error('[onTapSave] [更新] 失败：', err)
 					}
 				})
 			}
-		})
+			this.setData({
+				objChanged: false
+			})
 
-
+			// 最后订阅下一次的经期提醒
+			const preComeDate = this.data.preComeDate
+			const preEndDate = this.getPreEndDate(this.data.preComeDate, this.data.avgDuration)
+			const userInfo = app.globalData.globalUserInfo
+			const taskDocID = [this.data.task0docId, this.data.task1docId]
+			console.log('taskDocID:', taskDocID)
+			console.log(userInfo)
+			// 经期提醒模板id和经期结束提醒模板id
+			const tmplID = ['MHOvPKqWjA2lwCMUyQ7kv_6v-PplmnVvoTgzMxR5Dm4', 'iR9X1sDnvalF-m175DI2Rv9tGSpzpwNdXt40gCj2SUU']
+			// 更新推送定时任务
+			db.collection('timingTask0').doc(taskDocID[0]).update({
+				data: {
+					preComeDate: preComeDate
+				},
+				success: res => {
+					console.log('[onTapSave] 更新timingTask0:', res)
+				},
+				fail: err => {
+					console.error(err)
+				}
+			})
+			db.collection('timingTask1').doc(taskDocID[1]).update({
+				data: {
+					preEndDate: preEndDate,
+					nickName: userInfo.nickName
+				},
+				success: res => {
+					console.log('[onTapSave] 更新timingTask1:', res)
+				},
+				fail: err => {
+					console.error(err)
+				}
+			})
+			// 弹窗申请订阅提醒权限
+			wx.requestSubscribeMessage({
+				tmplIds: tmplID,
+				success(res) {
+					console.log(res)
+				},
+				fail(err) {
+					console.error('requestSubscribeMessage调用失败', err);
+				}
+			})
+		}
 	},
 	/***** 选择器选择时触发，将当前日期设置为选择到的日期 */
 	bindPickerRecentChange_Come: function (e) {

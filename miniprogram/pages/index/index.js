@@ -9,30 +9,11 @@ Page({
   },
 
   onLoad: function () {
-
-    // 获取用户信息
-    wx.getSetting({
-      success: res => {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-          wx.getUserInfo({
-            success: res => {
-              console.log('[getUserInfo]:',res)
-              this.setData({
-                avatarUrl: res.userInfo.avatarUrl,
-                userInfo: res.userInfo,
-                logged: true
-              })
-              app.globalData.logged = true
-              app.globalData.globalUserInfo = res.userInfo
-            }
-          })
-        }
-      }
-    })
+    console.log('[onLoad]')
   },
 
   onGetUserInfo: function (e) {
+    console.log('[onGetUserInfo]:', e.detail)
     if (!this.data.logged && e.detail.userInfo) {
       this.setData({
         logged: true,
@@ -40,6 +21,7 @@ Page({
         userInfo: e.detail.userInfo
       })
       app.globalData.logged = true
+      app.globalData.globalUserInfo = e.detail.userInfo
     }
   },
 
@@ -58,27 +40,10 @@ Page({
       },
       fail: err => {
         console.error('[云函数] [login] 调用失败', err)
-        wx.navigateTo({
-          url: '../deployFunctions/deployFunctions',
-        })
       }
     })
-    // 查询当前用户在数据库中的数据条目数
-		const db = wx.cloud.database()
-		db.collection('records').where({
-			_openid: app.globalData.globalOpenId
-		}).get({
-			success: res => {
-        console.log('[onLoad] [查询] 成功: ', res)
-        app.globalData.resLength = res.data.length //此用户在数据库中的数据条目数
-        app.globalData.docId = res.data.length == 0 ? '' : res.data[0]._id
-			},
-			fail: err => {
-				console.error('[onLoad] [查询] 失败：', err)
-			}
-		})
   },
-  cancel: function(){
+  cancel: function () {
     wx.switchTab({
       url: '../setRecord/setRecord',
     })

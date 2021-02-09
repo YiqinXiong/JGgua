@@ -17,6 +17,7 @@ App({
 
     this.globalData = {
       globalOpenId: '',
+      globalUserInfo: {},
       resLength: 0,
       docId: '',
       globalObj: [],

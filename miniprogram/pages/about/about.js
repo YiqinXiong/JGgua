@@ -27,13 +27,17 @@ Page({
 	// 循环播放音乐
 	playMusic: function () {
 		console.log('[playMusic] 播放音乐')
-		back.title = 'I\'m Yours'
-		// 音乐的mp3文件上传在自己的阿里云对象存储OSS中，链接从阿里云控制台复制得到
-		back.src = 'https://xyq6785665.oss-cn-shenzhen.aliyuncs.com/music/Jason%20Mraz%20-%20I%27m%20Yours.mp3'
-		console.log('播放音乐')
-		back.onEnded(() => {
-			player()
-		})
+		play()
+		function play() {
+			console.log('[playMusic] 播放音乐')
+			back.title = 'I\'m Yours'
+			// 音乐的mp3文件上传在自己的阿里云对象存储OSS中，链接从阿里云控制台复制得到
+			back.src = 'https://xyq6785665.oss-cn-shenzhen.aliyuncs.com/music/Jason%20Mraz%20-%20I%27m%20Yours.mp3'
+			console.log('播放音乐')
+			back.onEnded(() => {
+				play()
+			})
+		}
 	},
 
 	/**
@@ -41,17 +45,29 @@ Page({
 	 */
 	onLoad: function () {
 		console.log('[onLoad]')
-		// 获取登陆状态
-		if (!getApp().globalData.logged) {
-			wx.getSetting({
-				success: res => {
-					if (res.authSetting['scope.userInfo']) {
-						// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
-						app.globalData.logged = true
-					}
+		// 获取用户信息
+		wx.getSetting({
+			success: res => {
+				if (res.authSetting['scope.userInfo']) {
+					// 已经授权，可以直接调用 getUserInfo 获取头像昵称，不会弹框
+					wx.getUserInfo({
+						success: res => {
+							console.log('[onLoad] [getUserInfo]:', res)
+							app.globalData.logged = true
+							app.globalData.globalUserInfo = res.userInfo
+						}
+					})
+					// 已经授权，调用云函数 login 获取 openid
+					wx.cloud.callFunction({
+						name: 'login',
+						complete: res => {
+							console.log('[onLoad] [getOpenId]:', res.result.openid)
+							app.globalData.globalOpenId = res.result.openid
+						}
+					})
 				}
-			})
-		}
+			}
+		})
 	},
 
 	/**

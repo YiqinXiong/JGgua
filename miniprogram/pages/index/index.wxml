@@ -10,12 +10,12 @@
 		</view> -->
 
 	<block>
-
 		<image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
 		<text wx:if="{{logged}}" class="userinfo-nickname">{{userInfo.nickName}}</text>
 		<!-- <text wx:else class="tips">灰灰的多难看，点一下按钮它就变成你美美的头像了</text> -->
-		<text wx:else class="tips">要添加历史经期记录，请授权</text>
+		<text wx:else class="tips">要保存历史经期记录到云端，请授权</text>
 	</block>
+	
 	<!-- </view> -->
 	<view class="button-block">
 		<view wx:if="{{logged}}">
