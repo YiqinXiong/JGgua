@@ -75,17 +75,17 @@ exports.main = async (event, context) => {
 		console.error(e)
 	}
 	// 3.处理待执行任务
-	for (let i = timingTask.length-1; i >=0; i--) {
+	for (let i = 0; i < timingTask.length; i++) {
 		let task = timingTask[i];
 		console.log('task:', task)
 		try {
 			await cloud.openapi.subscribeMessage.send({
 				touser: task.openId,
 				templateId: task.tmplId,
-				page: 'pages/index/index',
+				page: 'pages/about/about',
 				data: task.data,
 				// 跳转小程序类型：developer为开发版；trial为体验版；formal为正式版；默认为正式版
-				miniprogramState: 'developer'
+				miniprogramState: 'formal'
 			})
 		} catch (e) {
 			console.error(e)
